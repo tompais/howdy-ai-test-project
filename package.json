@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/server.js",
     "lint": "eslint .",
     "test": "jest --passWithNoTests"
   },
@@ -16,5 +17,8 @@
     "eslint": "^10.2.0",
     "globals": "^17.4.0",
     "jest": "^30.3.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
