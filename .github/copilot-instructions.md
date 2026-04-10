@@ -164,7 +164,7 @@ When Sourcery suggestions appear in PRs:
 
 ## Continuous Improvement
 
-- After completing significant work, evaluate whether a new `.claude/skill` or agent should be created.
+- After completing significant work, evaluate whether a new `.claude/skills/` entry or agent should be created.
 - Surface repeated patterns as candidates for shared utilities or abstractions.
 - Proactively flag technical debt introduced during implementation.
 
