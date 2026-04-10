@@ -6,6 +6,9 @@ disable-model-invocation: true
 
 # New Feature Workflow
 
+> **Reference**: Base workflow conventions are defined in `CLAUDE.md`. This skill extends that workflow
+> with mandatory architecture validation checkpoints between layers.
+
 Execute these steps in order.
 
 ## 1. Brainstorm
