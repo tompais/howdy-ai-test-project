@@ -1,9 +1,8 @@
 # GitHub Copilot — Repository Instructions
 
 This file configures GitHub Copilot's behavior in the **howdy-ai-test-project** repository.
-It is the Copilot-equivalent of `CLAUDE.md` and follows the same engineering standards.
 
-> **Source of truth**: `CLAUDE.md` at the repo root is authoritative for all shared conventions.
+> **Source of truth**: `CLAUDE.md` at the repo root is authoritative for all shared engineering conventions (architecture, principles, validation, error handling, Git workflow, documentation). This file covers **Copilot-specific** responsibilities and behavior on top of those shared standards.
 > If this file and `CLAUDE.md` ever diverge, `CLAUDE.md` takes precedence.
 
 ---
@@ -34,46 +33,13 @@ npm test          # run tests (Jest, --passWithNoTests)
 
 CI runs on every push/PR via `.github/workflows/ci.yml`: Checkout → Setup Node → `npm ci` → ESLint → Jest → Upload coverage.
 
----
-
-## Architecture
-
-Strict layered architecture: **Controller → Service → Domain → Repository**
-
-```
-src/
-  controllers/   # routing, input validation, HTTP response shaping — NO business logic
-  services/      # use-case orchestration, calls repositories
-  domain/        # core entities and business rules — NO framework dependencies
-  repositories/  # all data access (DB queries, external API calls)
-```
-
-### Rules
-
-- **Thin controllers**: validation + routing + response mapping only.
-- **Services** own use-case flows and call repositories.
-- **Domain** must be framework-free — pure business logic.
-- **Repositories** are the only layer touching databases or external APIs.
-- **Constructor-based dependency injection** — never instantiate dependencies with `new` inside a class body.
-- No reverse imports: a lower layer must never import from a layer above it.
-
-### Supporting artifacts
-
-- `/docs` — structured Markdown documentation; always keep updated.
-- `/diagrams` — Mermaid (`.mmd`) architecture diagrams.
-- OpenAPI/Swagger spec for every API endpoint.
+> **Stack note**: This is a **JavaScript / CommonJS** project. TypeScript-specific constructs (interfaces, `any` types, generics) do not apply unless the project explicitly migrates to TypeScript. Use JSDoc annotations for type documentation where helpful.
 
 ---
 
-## Core Engineering Principles
+## Shared Engineering Standards
 
-SOLID · DRY · KISS · YAGNI · Clean Code · Clean Architecture
-
-- **Simplicity over cleverness** — readable, declarative code beats concise tricks.
-- **Small, focused functions** with a single responsibility.
-- **Avoid large conditionals** — prefer design patterns (Strategy, Guard Clauses, etc.).
-- **Constants** over magic strings; **enums** for finite value sets.
-- Every public module must have a clear contract (interface or documented API).
+All architecture rules (Controller → Service → Domain → Repository), engineering principles (SOLID, DRY, KISS, YAGNI), validation & error handling patterns, Git workflow, and documentation responsibilities are defined in [`CLAUDE.md`](../CLAUDE.md). Copilot must follow those standards in every code change.
 
 ---
 
@@ -81,53 +47,12 @@ SOLID · DRY · KISS · YAGNI · Clean Code · Clean Architecture
 
 When generating or completing code:
 
-1. **Follow the layer** — place code in the correct layer based on its responsibility.
+1. **Follow the layer** — place code in the correct layer based on its responsibility (see `CLAUDE.md` → Architecture).
 2. **Match existing style** — indentation, naming conventions, file structure.
 3. **Inject, don't instantiate** — all dependencies via constructor parameters.
 4. **No business logic in controllers** — if you're tempted, it belongs in a service.
 5. **Prefer composition over inheritance**.
-6. **Avoid `any` types** (TypeScript) — use explicit types or generics.
-7. **No hardcoded secrets or credentials** — use environment variables.
-
----
-
-## Validation & Error Handling
-
-- Input validation happens at the **controller level**.
-- Return correct HTTP status codes: `400` bad input, `404` not found, `409` conflict, `500` internal error.
-- Use **named custom exceptions** (e.g., `UserNotFoundException`, `OrderAlreadyExistsError`) — self-contained, minimal constructor parameters.
-- Implement a **global error handler** — no stack traces or sensitive information in responses.
-- Never swallow errors silently — log or re-throw.
-
----
-
-## Git Workflow
-
-### Branch naming
-
-| Prefix | Use for |
-|--------|---------|
-| `feature/*` | New features |
-| `fix/*` | Bug fixes |
-| `refactor/*` | Code restructuring without behavior change |
-| `chore/*` | Tooling, dependencies, CI/CD |
-| `hotfix/*` | Urgent production fixes |
-| `wording/*` | Documentation / copy changes |
-
-- Never commit directly to `main`.
-- Branch from the relevant base branch (usually `main`, or a feature branch if dependent).
-
-### Commits
-
-- Atomic and descriptive — one logical change per commit.
-- Use imperative mood: `Add user validation`, not `Added user validation`.
-
-### Pull Requests
-
-- **Title prefix required**: `[FTR]`, `[FIX]`, `[RFT]`, `[CHR]`, `[WRD]`
-- **Description must include**: what was done + why + key decisions made.
-- Chain PRs when work is dependent.
-- Suggest GitHub labels where applicable.
+6. **No hardcoded secrets or credentials** — use environment variables.
 
 ---
 
@@ -140,15 +65,6 @@ Copilot is the primary agent for CI/CD pipeline work:
 - Keep `actions/checkout`, `actions/setup-node`, `actions/upload-artifact` pinned to latest stable major versions.
 - Never store secrets in workflow files — use `${{ secrets.NAME }}`.
 - Add workflow triggers deliberately — avoid overly broad `push: branches: ['**']` when a narrower trigger is sufficient.
-
----
-
-## Documentation Responsibilities
-
-- Update `README.md` when adding features, commands, or changing project structure.
-- Keep `/docs` Markdown files in sync with code changes.
-- Keep `/diagrams` Mermaid diagrams updated when architecture changes.
-- Generate or update OpenAPI/Swagger specs when adding/modifying API endpoints.
 
 ---
 
