@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+commit_msg=$(cat "$1")
+
+# Allow merge, revert, fixup, and squash commits
+if echo "$commit_msg" | grep -qE "^(Merge|Revert|fixup!|squash!)"; then
+  exit 0
+fi
+
+# Enforce team commit prefix conventions
+if ! echo "$commit_msg" | grep -qE "^\[(FTR|FIX|RFT|CHR|WRD|HFX)\]"; then
+  echo ""
+  echo "  Commit message must start with a valid prefix."
+  echo "  Valid prefixes: [FTR] [FIX] [RFT] [CHR] [WRD] [HFX]"
+  echo ""
+  echo "  Got: $commit_msg"
+  echo ""
+  exit 1
+fi
