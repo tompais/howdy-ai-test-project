@@ -1,0 +1,20 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const t=JSON.parse(process.env.CLAUDE_TOOL_INPUT||'{}'); if(t.file_path && /\\.env(\\..*)?$/.test(require('path').basename(t.file_path))){console.error('Blocked: direct edits to .env files are not allowed. Use .env.example for templates.');process.exit(2);}\"",
+            "blockOnFailure": true
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [],
+    "deny": []
+  }
+}
