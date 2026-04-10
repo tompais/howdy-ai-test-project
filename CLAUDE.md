@@ -34,9 +34,11 @@ Both agents follow the same engineering standards defined here.
 Use superpower modes appropriately:
 - `brainstorming` → idea exploration
 - `writing-plans` → structured design
-- `executing-plans` → implementation
+- `executing-plans` → implementation, with the `architecture-reviewer` agent running after each layer completes
 
 Do NOT jump directly into code unless explicitly asked. Define the approach first.
+
+> **AI tooling note**: The `/new-feature` skill enforces this workflow with per-layer architecture validation checkpoints. Skills in `.claude/skills/` are distillations of the conventions in this file — `CLAUDE.md` is the authoritative source if they ever diverge.
 
 ---
 

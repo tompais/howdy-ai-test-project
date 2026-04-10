@@ -4,6 +4,10 @@ description: This skill should be used when needing to recall or apply this proj
 user-invocable: false
 ---
 
+> **Source of truth**: `CLAUDE.md` at the repo root is the canonical reference for all conventions below.
+> This skill is a Claude-optimized distillation for fast in-context access.
+> If this skill and `CLAUDE.md` ever diverge, `CLAUDE.md` takes precedence.
+
 ## Architecture
 
 Layered architecture: **Controller → Service → Domain → Repository**
