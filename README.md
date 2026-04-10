@@ -23,7 +23,21 @@ Layered architecture: **Controller → Service → Domain → Repository**
 ## Documentation
 
 - [`/docs`](./docs) — structured project documentation
+  - [`copilot-agent-guidelines.md`](./docs/copilot-agent-guidelines.md) — GitHub Copilot agent profile and collaboration guidelines (español)
 - [`/diagrams`](./diagrams) — Mermaid architecture diagrams
+
+## AI Collaboration
+
+This project uses a two-agent AI model:
+
+| Agent | Role |
+|-------|------|
+| **Claude** | Architecture, planning, design decisions, code quality |
+| **GitHub Copilot** | Code generation, boilerplate, CI/CD, scaffolding |
+
+- Claude instructions: [`CLAUDE.md`](./CLAUDE.md)
+- Copilot instructions: [`.github/copilot-instructions.md`](./.github/copilot-instructions.md)
+- Copilot guidelines (ES): [`docs/copilot-agent-guidelines.md`](./docs/copilot-agent-guidelines.md)
 
 ## CI/CD
 
