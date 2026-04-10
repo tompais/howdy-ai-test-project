@@ -34,7 +34,7 @@ Both agents follow the same engineering standards defined here.
 Use superpower modes appropriately:
 - `brainstorming` → idea exploration
 - `writing-plans` → structured design
-- `executing-plans` → implementation, with `architecture-reviewer` agent run after each layer completes
+- `executing-plans` → implementation, with the `architecture-reviewer` agent running after each layer completes
 
 Do NOT jump directly into code unless explicitly asked. Define the approach first.
 
