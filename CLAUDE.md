@@ -31,7 +31,7 @@ Both agents follow the same engineering standards defined here.
 - Validate plans before executing.
 - When tasks are independent, suggest batch execution.
 
-Use superpowers modes appropriately:
+Use superpower modes appropriately:
 - `brainstorming` → idea exploration
 - `writing-plans` → structured design
 - `executing-plans` → implementation
